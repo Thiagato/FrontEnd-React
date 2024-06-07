@@ -1,5 +1,6 @@
 import React from 'react';
 import CepConsultar from './components/pages/cep/cep-consultar';
+import ProdutoListar from './produto/produto-listar';
 
 function App() {
   return (
@@ -7,7 +8,8 @@ function App() {
   
         <h1>CONSULTADOR DE CEP</h1>
         
-        <CepConsultar></CepConsultar>
+        {/* <CepConsultar></CepConsultar> */}
+        <ProdutoListar></ProdutoListar>
  
 
     </div>

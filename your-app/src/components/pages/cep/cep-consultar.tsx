@@ -40,7 +40,7 @@ function CepConsultar(){
     
         />
             
-
+           
             <p>Rua {rua}</p>
             <button> vc mora no bairro: {bairro}</button>
             <input type="text" disabled value={cidade}/>
