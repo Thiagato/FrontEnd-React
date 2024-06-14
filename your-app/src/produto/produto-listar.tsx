@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Produto } from "./Produto";
+import axios from "axios";
 
 
 function ProdutoListar(){
@@ -13,52 +14,30 @@ function ProdutoListar(){
     }, []);
 
     function carregarProdutos(){
-        //Fetch ou axios
-        //fetch == buscar
-        fetch("http://localhost:5225/api/produto/listar")
-        .then((resposta) =>
-            resposta.json()
-        )
-        .then((produtos : Produto[]) => {
-            console.log(produtos);
-            setProdutos(produtos);
-                  
-        });
+       fetch("http://localhost:5225/api/produto/listar")
+       .then((resposta) => resposta.json()
+       ).then((produtos: Produto[]) =>{
+        console.table(produtos);
+        setProdutos(produtos);
+       })
         
     }
-    function CadastrarProdutos(){
-        const produto : Produto = {
-            nome : "Brito",
-            descicao : "gosto bem L",
-            valor : 0,
-            quantidade: 1
 
-        };
+    function deletar(id: string){
+        console.log(`Id: ${id} nome: ${id}`);
+        axios   
+            .delete(`http://localhost:5225/api/produto/deletar/${id}`)
+            .then((resposta) => {
+                console.log(resposta.data);
+                setProdutos(resposta.data);
+            });
 
-        //Fetch ou axios
-        //fetch == buscar
-        fetch("http://localhost:5225/api/produto/cadastrar", {
-            method: "POST",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(produto)
-        })
-        .then((resposta) =>
-            resposta.json()
-        )
-        .then((produto : Produto) => {
-            console.log(produto);
-            
-                  
-        });
         
     }
+
     return(
         <div>
-   
             <h1>Listar Produtos AHAHAHAHAHAHHAAHHAAAHAHAHaHAHAH Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore, impedit. Veniam, id hic.</h1>
-            <button onClick={CadastrarProdutos}>Cadastrar</button>
             <table border={30}>
                 <thead>
                     <tr>
@@ -72,15 +51,18 @@ function ProdutoListar(){
                 </thead>
                 <tbody>
                     
-                    {produtos.map(item => (
+                    {produtos.map(produtos => (
 
-                    <tr key={item.id}>
-                        <td>{item.id}</td>
-                        <td>{item.nome}</td>
-                        <td>{item.descicao}</td>
-                        <td>{item.valor}</td>
-                        <td>{item.quantidade}</td>
-                        <td>{item.criadoEm}</td>
+                        <tr key={produtos.id}>
+                        <td>{produtos.id}</td>
+                        <td>{produtos.nome}</td>
+                        <td>{produtos.descricao}</td>
+                        <td>{produtos.valor}</td>
+                        <td>{produtos.quantidade}</td>
+                        <td>{produtos.criadoEm}</td>
+                        <td>
+                            <button onClick={() => {deletar(produtos.id!)} }>Deletar</button>
+                        </td>
                     </tr>
                     ))}
                 </tbody>
